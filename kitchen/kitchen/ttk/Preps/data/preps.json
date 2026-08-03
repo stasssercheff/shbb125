@@ -560,6 +560,55 @@
   }
 
    },
+
+
+{
+  "name": {
+    "ru": "ПФ СОУС ГОРГОНЗОЛА",
+    "en": "PREP GORGONZOLA SAUCE",
+    "vi": "SỐT PHÔ MAI GORGONZOLA (SƠ CHẾ)"
+  },
+  "key": "Итого",
+  "enabled": true,    
+  "ingredients": [ 
+    { "№": 1, "Продукт": "Сливки", "Ingredient": "Cream", "Ingredient_vi": "Kem tươi (cream)", "Шт/гр": "30" },
+    { "№": 2, "Продукт": "Сыр горгонзола", "Ingredient": "Gorgonzola cheese", "Ingredient_vi": "Phô mai Gorgonzola", "Шт/гр": "10" },
+    { "№": 3, "Продукт": "Итого", "Ingredient": "Total", "Ingredient_vi": "Tổng cộng", "Шт/гр": "40" }
+  ],
+  "process": {
+    "ru": "Смешать в сотейнике и растопить до однородной консистенции.",
+    "en": "Mix in a saucepan and melt until a smooth, uniform consistency is reached.",
+    "vi": "Trộn các nguyên liệu trong một nồi nhỏ và đun chảy cho đến khi đạt độ sệt đồng nhất."
+  }
+},
+
+
+
+{
+  "name": {
+    "ru": "ПФ ГУАКАМОЛЕ",
+    "en": "PREP GUACAMOLE",
+    "vi": "SỐT BƠ GUACAMOLE (SƠ CHẾ)"
+  },
+  "key": "Авокадо очищенный",
+  "enabled": true,    
+  "ingredients": [ 
+    { "№": 1, "Продукт": "Авокадо очищенный", "Ingredient": "Peeled avocado", "Ingredient_vi": "Bơ đã lột vỏ", "Шт/гр": "370" },
+    { "№": 2, "Продукт": "Соль", "Ingredient": "Salt", "Ingredient_vi": "Muối", "Шт/гр": "6" },
+    { "№": 3, "Продукт": "Мед", "Ingredient": "Honey", "Ingredient_vi": "Mật ong", "Шт/гр": "10" },
+    { "№": 4, "Продукт": "Вода (кипяченая, холодная)", "Ingredient": "Water (boiled, cold)", "Ingredient_vi": "Nước (đun sôi để nguội)", "Шт/гр": "75" },
+    { "№": 5, "Продукт": "Краситель пищевой зел.", "Ingredient": "Green food coloring", "Ingredient_vi": "Màu thực phẩm xanh lá", "Шт/гр": "2" },
+    { "№": 6, "Продукт": "Масло оливковое", "Ingredient": "Olive oil", "Ingredient_vi": "Dầu ô liu", "Шт/гр": "35" },
+    { "№": 7, "Продукт": "Итого", "Ingredient": "Total", "Ingredient_vi": "Tổng cộng", "Шт/гр": "500" }
+  ],
+  "process": {
+    "ru": "Все смешать и перебить блендером до однородной массы.",
+    "en": "Mix everything and blend with a blender until a smooth, homogeneous mass is formed.",
+    "vi": "Trộn tất cả các nguyên liệu và xay bằng máy xay cho đến khi đạt hỗn hợp đồng nhất, mịn màng."
+  }
+},
+
+    
     
     {
   "name": {
