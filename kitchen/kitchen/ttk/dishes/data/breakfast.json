@@ -212,6 +212,39 @@
     "vi": "Chiên 2 trứng ốp la. Nướng bánh ciabatta và phết phô mai kem. Cắt dưa leo lát oval, cà chua cherry cắt múi. Bày cá hồi và cà chua dạng sóng. Cho rau rocket lên đĩa, đặt trứng lên trên, ăn kèm bánh và rau mầm."
   },
   "photo": "photos/sunfried eggs.png"
+},
+{
+
+
+
+"name": {
+      "ru": "ГЛАЗУНЬЯ С БЕКОНОМ",
+      "en": "FRIED EGGS WITH BACON",
+      "vi": "TRỨNG ỐP LA VỚI THỊT BA RỌI XÔNG KHÓI"
+    },
+    "ingredients": [
+      { "ru": "Яйцо", "en": "Egg", "vi": "Trứng", "amount": "2" },
+      { "ru": "Бекон", "en": "Bacon", "vi": "Thịt ba rọi xông khói", "amount": "65" },
+      { "ru": "Помидоры Черри темные", "en": "Dark cherry tomatoes", "vi": "Cà chua bi đen", "amount": "30" },
+      { "ru": "ПФ Огурец свежий", "en": "Prep Fresh cucumber", "vi": "Dưa leo tươi (sơ chế)", "amount": "30" },
+      { "ru": "ПФ Чиабатта", "en": "Prep Ciabatta", "vi": "Bánh mì Ciabatta (sơ chế)", "amount": "80" },
+      { "ru": "Руккола", "en": "Arugula", "vi": "Rau cải xoăn Rucola", "amount": "10" },
+      { "ru": "ПФ микрозелень", "en": "Prep Microgreens", "vi": "Rau mầm (sơ chế)", "amount": "3" },
+      { "ru": "Соль", "en": "Salt", "vi": "Muối", "amount": "1" },
+      { "ru": "Масло растительное", "en": "Vegetable oil", "vi": "Dầu thực vật", "amount": "10" }
+    ],
+    "process": {
+      "ru": "На сковороде пожарить глазунью из 2 яиц. Чиабатту подсушить в печи. Бекон запечь в печи (6–7 мин). Огурец нарезать овалами, черри — дольками. Выложить на тарелку рукколу и помидорки, сбоку — огурец, по центру — глазунью, рядом — гренки и бекон. Украсить микрозеленью.",
+      "en": "Fry 2 eggs sunny-side up in a pan. Toast the ciabatta in the oven. Bake the bacon in the oven for 6-7 minutes. Slice the cucumber into ovals and cut the cherry tomatoes into wedges. Place arugula and cherry tomatoes on the plate, put the cucumber on the side, fried eggs in the center, and toasts with bacon next to them. Decorate with microgreens.",
+      "vi": "Chiên ốp la 2 quả trứng trên chảo. Nướng giòn bánh mì Ciabatta trong lò. Nướng thịt ba rọi trong lò (6–7 phút). Dưa leo cắt lát xéo, cà chua bi cắt múi cau. Xếp rau cải xoăn và cà chua lên đĩa, dưa leo để một bên, trứng ốp la đặt ở giữa, bên cạnh là bánh mì nướng và thịt ba rọi. Trang trí bằng rau mầm."
+    },
+    "photo": "photos/fried_eggs_bacon.png"
+
+
 }
+
+
+
+  
   
 ]
