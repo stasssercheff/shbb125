@@ -480,12 +480,12 @@
   { "№": 4, "Продукт": "Вода не сырая", "Ingredient": "Boiled water", "Ingredient_vi": "Nước đã đun sôi", "Шт/гр": "70" },
   { "№": 5, "Продукт": "Краситель пищевой зел.", "Ingredient": "Green food coloring", "Ingredient_vi": "Màu thực phẩm xanh lá", "Шт/гр": "2" },
   { "№": 6, "Продукт": "Масло оливковое", "Ingredient": "Olive oil", "Ingredient_vi": "Dầu ô liu", "Шт/гр": "35" },
-  { "№": 7, "Продукт": "Итого", "Ingredient": "Total", "Ingredient_vi": "Tổng cộng", "Шт/гр": "822" }
+  { "№": 7, "Продукт": "Итого", "Ingredient": "Total", "Ingredient_vi": "Tổng cộng", "Шт/гр": "500" }
   ],
   "process": {
-    "ru": "Авокадо очистить от кожуры и косточки. Смешать все в миске и перебить блендером до однородной кремообразной массы. Расфасовать по вакуумным пакетам без воздуха внутри. Хранить в морозилке. Размораживать доставая на ночь в холодильник без разогрева.",
-    "en": "Peel and pit the avocado. Mix all ingredients in a bowl and blend until a smooth, creamy mass is formed. Pack into vacuum bags, ensuring no air remains inside. Store in the freezer. Thaw by transferring to the refrigerator overnight without reheating.",
-    "vi": "Gọt vỏ bơ và bỏ hạt. Trộn tất cả nguyên liệu trong tô rồi dùng máy xay sinh tố xay nhuyễn cho đến khi đạt hỗn hợp kem mịn đồng nhất. Đóng gói vào túi hút chân không, đảm bảo không còn không khí bên trong. Bảo quản trong ngăn đông. Rã đông bằng cách chuyển sang ngăn mát tủ lạnh qua đêm, không làm nóng lại."
+    "ru": "Авокадо(700) очистить от кожуры и косточки. Смешать все в миске и перебить блендером до однородной кремообразной массы. Расфасовать по вакуумным пакетам без воздуха внутри. Хранить в морозилке. Размораживать доставая на ночь в холодильник без разогрева.",
+    "en": "Peel and pit the avocado(700). Mix all ingredients in a bowl and blend until a smooth, creamy mass is formed. Pack into vacuum bags, ensuring no air remains inside. Store in the freezer. Thaw by transferring to the refrigerator overnight without reheating.",
+    "vi": "Gọt vỏ bơ và bỏ hạt(700). Trộn tất cả nguyên liệu trong tô rồi dùng máy xay sinh tố xay nhuyễn cho đến khi đạt hỗn hợp kem mịn đồng nhất. Đóng gói vào túi hút chân không, đảm bảo không còn không khí bên trong. Bảo quản trong ngăn đông. Rã đông bằng cách chuyển sang ngăn mát tủ lạnh qua đêm, không làm nóng lại."
   }
 },
 
@@ -584,29 +584,7 @@
 
 
 
-{
-  "name": {
-    "ru": "ПФ ГУАКАМОЛЕ",
-    "en": "PREP GUACAMOLE",
-    "vi": "SỐT BƠ GUACAMOLE (SƠ CHẾ)"
-  },
-  "key": "Авокадо очищенный",
-  "enabled": true,    
-  "ingredients": [ 
-    { "№": 1, "Продукт": "Авокадо очищенный", "Ingredient": "Peeled avocado", "Ingredient_vi": "Bơ đã lột vỏ", "Шт/гр": "370" },
-    { "№": 2, "Продукт": "Соль", "Ingredient": "Salt", "Ingredient_vi": "Muối", "Шт/гр": "6" },
-    { "№": 3, "Продукт": "Мед", "Ingredient": "Honey", "Ingredient_vi": "Mật ong", "Шт/гр": "10" },
-    { "№": 4, "Продукт": "Вода (кипяченая, холодная)", "Ingredient": "Water (boiled, cold)", "Ingredient_vi": "Nước (đun sôi để nguội)", "Шт/гр": "75" },
-    { "№": 5, "Продукт": "Краситель пищевой зел.", "Ingredient": "Green food coloring", "Ingredient_vi": "Màu thực phẩm xanh lá", "Шт/гр": "2" },
-    { "№": 6, "Продукт": "Масло оливковое", "Ingredient": "Olive oil", "Ingredient_vi": "Dầu ô liu", "Шт/гр": "35" },
-    { "№": 7, "Продукт": "Итого", "Ingredient": "Total", "Ingredient_vi": "Tổng cộng", "Шт/гр": "500" }
-  ],
-  "process": {
-    "ru": "Все смешать и перебить блендером до однородной массы.",
-    "en": "Mix everything and blend with a blender until a smooth, homogeneous mass is formed.",
-    "vi": "Trộn tất cả các nguyên liệu và xay bằng máy xay cho đến khi đạt hỗn hợp đồng nhất, mịn màng."
-  }
-},
+
 
     
     
