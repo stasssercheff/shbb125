@@ -2023,6 +2023,16 @@
     "en": "Pasta",
     "vi": "Mỳ ống"
   },
+  "avocado": {
+    "ru": "Авокадо",
+    "en": "Avocado",
+    "vi": "Bơ"
+  },
+  "bacon": {
+    "ru": "Бекон",
+    "en": "Bacon",
+    "vi": "Thịt xông khói"
+  }
   "working_fridges": {
     "ru": "Холодильники рабочие",
     "en": "Working fridges",
