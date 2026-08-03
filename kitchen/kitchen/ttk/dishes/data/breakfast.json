@@ -1,5 +1,34 @@
 [
   {
+
+
+
+
+"name": {
+      "ru": "АВО-ТОСТ",
+      "en": "AVO TOAST",
+      "vi": "BÁNH MÌ NƯỚNG BƠ"
+    },
+    "ingredients": [
+      { "ru": "ПФ Пашот", "en": "Prep Poached", "vi": "Trứng chần (sơ chế)", "amount": "1" },
+      { "ru": "ПФ Форель С/С", "en": "Prep Salted trout", "vi": "Cá hồi muối (sơ chế)", "amount": "40" },
+      { "ru": "ПФ Вяленые томаты", "en": "Prep Sun-dried tomatoes", "vi": "Cà chua sấy (sơ chế)", "amount": "30" },
+      { "ru": "ПФ Деревенский хлеб", "en": "Prep Country bread", "vi": "Bánh mì quê (sơ chế)", "amount": "60" },
+      { "ru": "ПФ Салат микс", "en": "Mixed salad", "vi": "Salad trộn (sơ chế)", "amount": "30" },
+      { "ru": "ПФ Гуакамоле", "en": "Prep Guacamole", "vi": "Sốt bơ Guacamole (sơ chế)", "amount": "100" },
+      { "ru": "ПФ микрозелень", "en": "Prep Microgreens", "vi": "Rau mầm (sơ chế)", "amount": "3" },
+      { "ru": "ПФ Соус винегрет", "en": "Vinaigrette sauce", "vi": "Sốt vinaigrette (sơ chế)", "amount": "10" }
+    ],
+    "process": {
+      "ru": "Сделать гренку из хлеба в печи, на гренку нанести гуакамоле, оставив пустое пространство для рыбы. Свернуть рыбу розочкой и поместить на пустое пространство. В тарелку поместить микс-салат, полить соусом винегрет. На гуакамоле выложить хаотично томаты. Готовое яйцо пашот положить в малый соусник. Посыпать все микрозеленью.",
+      "en": "Make a toast from bread in the oven, spread guacamole on the toast, leaving empty space for the fish. Roll the fish into a rosette and place it on the empty space. Place mixed salad on the plate, drizzle with vinaigrette sauce. Spread tomatoes randomly on top of the guacamole. Put the prepared poached egg into a small sauce bowl. Sprinkle everything with microgreens.",
+      "vi": "Nướng bánh mì trong lò thành bánh mì nướng, phết sốt bơ guacamole lên bánh và chừa lại khoảng trống cho cá. Cuộn cá hồi thành hình bông hồng rồi đặt vào khoảng trống đó. Xếp salad trộn vào đĩa, rưới sốt vinaigrette lên. Xếp ngẫu nhiên cà chua sấy lên trên sốt bơ. Cho trứng chần đã chín vào một chén sốt nhỏ. Rắc rau mầm lên toàn bộ món ăn."
+    },
+    "photo": "photos/avo_toast.png"
+
+ },
+  {
+    
     "name": {
       "ru": "ЯЙЦА БЕНЕДИКТ",
       "en": "EGGS BENEDICT",
