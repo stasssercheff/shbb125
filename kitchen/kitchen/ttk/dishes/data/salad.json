@@ -116,29 +116,7 @@
     },
     "photo": "photos/tartar.png"
   },
-  {
-    "name": {
-      "ru": "Жюльен",
-      "en": "Julien",
-      "vi": "Julienne"
-    },
-    "ingredients": [
-      { "ru": "ПФ Жульен", "en": "PF Julien", "vi": "Julienne (sơ chế)", "amount": "100" },
-      { "ru": "Моцарелла (тертая)", "en": "Mozzarella (grated)", "vi": "Mozzarella bào sợi", "amount": "20" },
-      { "ru": "Пармезан", "en": "Parmesan", "vi": "Phô mai Parmesan", "amount": "10" },
-      { "ru": "Белая чиабатта", "en": "White ciabatta", "vi": "Bánh mì ciabatta trắng", "amount": "40" }
-    ],
-    "process": {
-      "ru": "ПФ Жульен поместить в горячую воду для оттаивания и прогрева. Гренки из чиабатты (0.2-0.3 см толщиной, нарезкой в длину батона) поместить в печь на 4-6 мин для подсыхания. В керамический соусник выложить Жульен, посыпать сверху моцареллу. Горелкой растопить сыр до золотистой корочки. Поместить гренки веером сбоку. Посыпать все пармезаном.",
-      "en": "Place the Prep Julienne in hot water to defrost and warm up. Place the ciabatta croutons (0.2-0.3 cm thick, cut along the length of the loaf) in the oven for 4-6 minutes to dry. Place the Julienne in a ceramic sauceboat, sprinkle mozzarella on top. Melt the cheese with a blowtorch until golden brown. Place the croutons on the side in a fan shape. Sprinkle everything with Parmesan.",
-      "vi": "Làm nóng julienne (sơ chế) trong nước nóng. Nướng bánh mì ciabatta cắt lát mỏng 4–6 phút cho khô. Cho julienne vào chén sứ, rắc mozzarella và khò đến vàng. Xếp bánh nướng bên cạnh và rắc Parmesan."
-    },
-    "photo": "photos/jouliene.png"
-  },
-
-
-
-
+  
 
 "name": {
       "ru": "АНТИПАСТИ",
@@ -165,10 +143,4 @@
     },
     "photo": "photos/antipasti.png"
 }
-
-
-
-
-
-  
 ]
