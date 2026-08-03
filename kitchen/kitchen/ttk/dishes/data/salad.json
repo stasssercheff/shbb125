@@ -116,9 +116,8 @@
     },
     "photo": "photos/tartar.png"
   },
-  
-
-"name": {
+  {
+    "name": {
       "ru": "АНТИПАСТИ",
       "en": "ANTIPASTI",
       "vi": "KHAI VỊ ANTIPASTI"
@@ -141,7 +140,6 @@
       "en": "Reheat the pre-made sauce and place it in a sauce bowl. Slice the bread into toasts and warm them in the oven. Cut the cheese. Tear the Parma ham into 4-6 pieces and arrange them on the plate to create volume. Arrange the remaining ingredients on the plate according to the photo.",
       "vi": "Hâm nóng sốt đã chuẩn bị sẵn rồi cho vào chén sốt. Cắt lát bánh mì và làm nóng trong lò. Cắt nhỏ phô mai. Xé thịt muối Parma thành 4–6 miếng rồi xếp lên đĩa để tạo độ phồng. Các nguyên liệu còn lại xếp lên đĩa theo như hình ảnh."
     },
-    "photo": "photos/antipasti.png" 
- },
-}    
-  ]
+    "photo": "photos/antipasti.png"
+  }
+]
