@@ -134,5 +134,41 @@
       "vi": "Làm nóng julienne (sơ chế) trong nước nóng. Nướng bánh mì ciabatta cắt lát mỏng 4–6 phút cho khô. Cho julienne vào chén sứ, rắc mozzarella và khò đến vàng. Xếp bánh nướng bên cạnh và rắc Parmesan."
     },
     "photo": "photos/jouliene.png"
-  }
+  },
+
+
+
+
+
+"name": {
+      "ru": "АНТИПАСТИ",
+      "en": "ANTIPASTI",
+      "vi": "KHAI VỊ ANTIPASTI"
+    },
+    "ingredients": [
+      { "ru": "Маслины", "en": "Black olives", "vi": "Quả oliu đen", "amount": "15" },
+      { "ru": "Сыр моцарелла", "en": "Mozzarella cheese", "vi": "Phô mai Mozzarella", "amount": "100" },
+      { "ru": "Хлеб чиабатта", "en": "Ciabatta bread", "vi": "Bánh mì Ciabatta", "amount": "80" },
+      { "ru": "Орех фундук", "en": "Hazelnut", "vi": "Hạt phỉ", "amount": "15" },
+      { "ru": "ПФ Руккола", "en": "Prep Arugula", "vi": "Rau cải xoăn Rucola (sơ chế)", "amount": "5" },
+      { "ru": "ПФ Вяленые томаты", "en": "Prep Sun-dried tomatoes", "vi": "Cà chua sấy (sơ chế)", "amount": "30" },
+      { "ru": "ПФ соус горгонзола", "en": "Prep Gorgonzola sauce", "vi": "Sốt phô mai Gorgonzola (sơ chế)", "amount": "30" },
+      { "ru": "Семена тыквы", "en": "Pumpkin seeds", "vi": "Hạt bí", "amount": "5" },
+      { "ru": "Мед", "en": "Honey", "vi": "Mật ong", "amount": "30" },
+      { "ru": "Хлеб бородинский", "en": "Borodinsky bread", "vi": "Bánh mì đen Borodinsky", "amount": "30" },
+      { "ru": "Ветчина парма", "en": "Parma ham", "vi": "Thịt muối Parma ham", "amount": "20" }
+    ],
+    "process": {
+      "ru": "Заранее приготовленный соус разогреть и поместить в соусник. Гренки нарезать и прогреть в печи. Сыр нарезать. Пармскую ветчину порвать на 4–6 кусочков и объемно выложить на тарелку. Остальные ингредиенты выложить на тарелку согласно фото.",
+      "en": "Reheat the pre-made sauce and place it in a sauce bowl. Slice the bread into toasts and warm them in the oven. Cut the cheese. Tear the Parma ham into 4-6 pieces and arrange them on the plate to create volume. Arrange the remaining ingredients on the plate according to the photo.",
+      "vi": "Hâm nóng sốt đã chuẩn bị sẵn rồi cho vào chén sốt. Cắt lát bánh mì và làm nóng trong lò. Cắt nhỏ phô mai. Xé thịt muối Parma thành 4–6 miếng rồi xếp lên đĩa để tạo độ phồng. Các nguyên liệu còn lại xếp lên đĩa theo như hình ảnh."
+    },
+    "photo": "photos/antipasti.png"
+}
+
+
+
+
+
+  
 ]
