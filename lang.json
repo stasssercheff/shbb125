@@ -4,6 +4,11 @@
     "en": "Employee Portal",
     "vi": "Cổng nhân viên"
    },
+  "balance": {
+  "ru": "Остатки",
+  "en": "Remaining", 
+  "vi": "Còn lại"
+},
   "preps1": {
     "ru": "ПФ",
     "en": "Preps",
