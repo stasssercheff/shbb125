@@ -212,9 +212,12 @@
     { "№": 3, "Продукт": "Сахар", "Ingredient": "Sugar", "Ingredient_vi": "Đường", "Шт/гр": "4" }
   ],
   "process": {
-    "ru": "Форель выложить в гастроемкость шкурой вниз. Посыпать солью затем сахаром. Оставить на 5-8 часов.",
-    "en": "Place the trout in a gastronorm container skin side down. Sprinkle with salt then sugar. Leave for 5-8 hours.",
-    "vi": "Xếp cá vào khay, để mặt da xuống dưới. Rắc muối rồi đến đường. Ướp trong 5–8 giờ."
+    "process": {
+    "ru": "Форель выложить в гастроемкость шкурой вниз. Смешать сахар с солью до однородности. 30% посыпать под рыбу, остальным количеством посыпать рыбу сверху. Оставить на 5-8 часов.",
+    "en": "Place the trout in a gastronorm container skin side down. Mix the sugar and salt until uniform. Sprinkle 30% of the mixture underneath the fish and the remaining amount over the top. Leave for 5-8 hours.",
+    "vi": "Xếp cá hồi vào khay, để mặt da xuống dưới. Trộn đều muối và đường cho đến khi đồng nhất. Rắc 30% hỗn hợp xuống dưới cá, phần còn lại rắc đều lên trên. Ướp trong 5–8 giờ."
+}
+
   }
 },
 {
