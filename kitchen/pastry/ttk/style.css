@@ -10,6 +10,57 @@
   box-shadow: 0 3px 10px var(--shadow);
 }
 
+/* Вертикальный список позиций (блюд) */
+.ttk-positions-block {
+  margin-bottom: 28px;
+  padding: 16px 18px;
+  background-color: var(--bg);
+  border-radius: 10px;
+}
+
+.ttk-positions-title {
+  font-weight: 600;
+  font-size: 18px;
+  margin-bottom: 8px;
+  color: var(--text);
+}
+
+.ttk-positions-hint {
+  font-size: 13px;
+  color: var(--muted);
+  margin-bottom: 12px;
+  line-height: 1.4;
+}
+
+.ttk-positions-list {
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+}
+
+.ttk-position-btn {
+  width: 100%;
+  text-align: left;
+  padding: 11px 14px;
+  border: 1px solid #ddd;
+  border-radius: 8px;
+  background-color: var(--card);
+  cursor: pointer;
+  font-weight: 600;
+  font-size: 15px;
+  color: var(--text);
+  transition: background-color 0.15s ease, border-color 0.15s ease;
+}
+
+.ttk-position-btn:hover {
+  background-color: #eee8df;
+}
+
+.ttk-position-btn.is-active {
+  background-color: #eee8df;
+  border-color: #c4a574;
+}
+
 .ttk-toc-title {
   font-weight: 600;
   font-size: 18px;

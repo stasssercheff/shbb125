@@ -16,6 +16,8 @@ const dataFiles = {
   Preps: 'data/preps.json',
 };
 
+const POSITIONS_FILE = 'data/positions.json';
+
 const STORAGE_PREFIX = 'pastry_ttk';
 const EXPANDED_KEY = `${STORAGE_PREFIX}_expanded`;
 const AMOUNTS_KEY = `${STORAGE_PREFIX}_amounts`;
@@ -76,12 +78,98 @@ function rememberExpandedState(cardId, isOpen) {
   setExpandedIds([...expanded]);
 }
 
-// Загрузка JSON
-function loadData(sectionName, callback) {
-  fetch(dataFiles[sectionName])
-    .then(res => res.json())
-    .then(data => callback(data))
-    .catch(err => console.error(err));
+function t(key, ru, en, vi) {
+  if (typeof translations !== 'undefined' && translations[key]?.[currentLang]) {
+    return translations[key][currentLang];
+  }
+  if (currentLang === 'en') return en;
+  if (currentLang === 'vi') return vi;
+  return ru;
+}
+
+function getLocalizedName(item) {
+  return item?.name?.[currentLang] || item?.name?.ru || item?.title || '';
+}
+
+function loadPositions() {
+  return fetch(POSITIONS_FILE)
+    .then(res => (res.ok ? res.json() : { positions: [] }))
+    .catch(() => ({ positions: [] }));
+}
+
+function setCardsOpen(cardNames, cardByRuName, open) {
+  let firstOpened = null;
+
+  cardNames.forEach(name => {
+    const item = cardByRuName.get(name.trim());
+    if (!item) return;
+
+    item.open = open;
+    rememberExpandedState(item.dataset.cardId, open);
+    if (open && !firstOpened) firstOpened = item;
+  });
+
+  return firstOpened;
+}
+
+function isPositionFullyOpen(position, cardByRuName) {
+  return position.cards.every(name => {
+    const item = cardByRuName.get(name.trim());
+    return item && item.open;
+  });
+}
+
+function renderPositions(positionsData, cardByRuName) {
+  const positions = (positionsData.positions || []).filter(p => Array.isArray(p.cards) && p.cards.length);
+  if (!positions.length) return null;
+
+  const block = document.createElement('section');
+  block.className = 'ttk-positions-block';
+
+  const title = document.createElement('div');
+  title.className = 'ttk-positions-title';
+  title.setAttribute('data-i18n', 'ttk_positions');
+  title.textContent = t('ttk_positions', 'Позиции', 'Menu items', 'Món');
+  block.appendChild(title);
+
+  const hint = document.createElement('div');
+  hint.className = 'ttk-positions-hint';
+  hint.textContent = t(
+    'ttk_positions_hint',
+    'Нажмите позицию — раскроются все связанные карточки ниже. Повторный клик — свернуть.',
+    'Click an item to expand all linked cards below. Click again to collapse.',
+    'Nhấp món để mở tất cả thẻ liên quan bên dưới. Nhấp lại để thu gọn.'
+  );
+  block.appendChild(hint);
+
+  const list = document.createElement('div');
+  list.className = 'ttk-positions-list';
+
+  positions.forEach(position => {
+    const btn = document.createElement('button');
+    btn.type = 'button';
+    btn.className = 'ttk-position-btn';
+    btn.textContent = getLocalizedName(position);
+
+    if (isPositionFullyOpen(position, cardByRuName)) {
+      btn.classList.add('is-active');
+    }
+
+    btn.addEventListener('click', () => {
+      const shouldOpen = !btn.classList.contains('is-active');
+      const first = setCardsOpen(position.cards, cardByRuName, shouldOpen);
+      btn.classList.toggle('is-active', shouldOpen);
+
+      if (shouldOpen && first) {
+        first.scrollIntoView({ behavior: 'smooth', block: 'start' });
+      }
+    });
+
+    list.appendChild(btn);
+  });
+
+  block.appendChild(list);
+  return block;
 }
 
 // 🔄 Обновление таблицы при смене языка
@@ -92,42 +180,41 @@ function updateTablesByLang(lang) {
 
 // Отображение раздела
 function renderSection(sectionName) {
-  loadData(sectionName, data => createTable(data, sectionName));
+  Promise.all([
+    fetch(dataFiles[sectionName]).then(res => res.json()),
+    loadPositions(),
+  ])
+    .then(([data, positionsData]) => createTable(data, positionsData))
+    .catch(err => console.error(err));
 }
 
 // Название блюда с учётом языка
 function getDishName(dish) {
-  return dish.name?.[currentLang] || dish.name?.ru || dish.title || '';
+  return getLocalizedName(dish);
 }
 
 // Вертикальный список ТТК: карточка раскрывается под названием
-function createTable(data) {
+function createTable(data, positionsData) {
   const tableContainer = document.querySelector('.table-container');
   tableContainer.innerHTML = '';
 
-  const tocTitle = document.createElement('div');
-  tocTitle.className = 'ttk-toc-title';
-  tocTitle.setAttribute('data-i18n', 'ttk_toc');
-  tocTitle.textContent =
-    (typeof translations !== 'undefined' && translations.ttk_toc?.[currentLang]) ||
-    (currentLang === 'en' ? 'Contents' : currentLang === 'vi' ? 'Mục lục' : 'Оглавление');
-  tableContainer.appendChild(tocTitle);
-
-  const accordion = document.createElement('div');
-  accordion.className = 'ttk-accordion';
-  tableContainer.appendChild(accordion);
-
+  const cardByRuName = new Map();
   const recipes = data.recipes.filter(dish => !dish.hidden);
   const expandedIds = new Set(getExpandedIds());
   const savedAmounts = getSavedAmountsMap();
 
+  const accordion = document.createElement('div');
+  accordion.className = 'ttk-accordion';
+
   recipes.forEach((dish, index) => {
     const cardId = `dish-${index}`;
     const dishName = getDishName(dish);
+    const cardNameRu = (dish.name?.ru || '').trim();
 
     const item = document.createElement('details');
     item.className = 'ttk-accordion-item';
     item.dataset.cardId = cardId;
+    if (cardNameRu) item.dataset.cardNameRu = cardNameRu;
 
     const header = document.createElement('summary');
     header.className = 'ttk-accordion-header';
@@ -216,6 +303,8 @@ function createTable(data) {
     item.appendChild(panel);
     accordion.appendChild(item);
 
+    if (cardNameRu) cardByRuName.set(cardNameRu, item);
+
     if (savedAmounts[cardId]) {
       applyAmountsToTable(table, savedAmounts[cardId]);
     }
@@ -228,6 +317,19 @@ function createTable(data) {
       rememberExpandedState(cardId, item.open);
     });
   });
+
+  const positionsBlock = renderPositions(positionsData, cardByRuName);
+  if (positionsBlock) {
+    tableContainer.appendChild(positionsBlock);
+  }
+
+  const allTitle = document.createElement('div');
+  allTitle.className = 'ttk-toc-title';
+  allTitle.setAttribute('data-i18n', 'ttk_all_cards');
+  allTitle.textContent = t('ttk_all_cards', 'Все карточки', 'All cards', 'Tất cả thẻ');
+  tableContainer.appendChild(allTitle);
+
+  tableContainer.appendChild(accordion);
 }
 
 // ✅ Инициализация

@@ -1354,6 +1354,21 @@
     "en": "Contents",
     "vi": "Mục lục"
   },
+  "ttk_positions": {
+    "ru": "Позиции",
+    "en": "Menu items",
+    "vi": "Món"
+  },
+  "ttk_positions_hint": {
+    "ru": "Нажмите позицию — раскроются все связанные карточки ниже. Повторный клик — свернуть.",
+    "en": "Click an item to expand all linked cards below. Click again to collapse.",
+    "vi": "Nhấp món để mở tất cả thẻ liên quan bên dưới. Nhấp lại để thu gọn."
+  },
+  "ttk_all_cards": {
+    "ru": "Все карточки",
+    "en": "All cards",
+    "vi": "Tất cả thẻ"
+  },
   "checklists": {
     "ru": "Чеклисты",
     "en": "Checklists",
