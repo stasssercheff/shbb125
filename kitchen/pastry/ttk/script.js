@@ -69,21 +69,9 @@ function persistCardAmounts(cardId, table) {
   saveAmountsMap(map);
 }
 
-function toggleAccordionItem(item, cardId, forceOpen) {
-  const panel = item.querySelector('.ttk-accordion-panel');
-  const header = item.querySelector('.ttk-accordion-header');
-  if (!panel || !header) return;
-
-  const shouldOpen = typeof forceOpen === 'boolean'
-    ? forceOpen
-    : !item.classList.contains('is-open');
-
-  item.classList.toggle('is-open', shouldOpen);
-  panel.hidden = !shouldOpen;
-  header.setAttribute('aria-expanded', shouldOpen ? 'true' : 'false');
-
+function rememberExpandedState(cardId, isOpen) {
   const expanded = new Set(getExpandedIds());
-  if (shouldOpen) expanded.add(cardId);
+  if (isOpen) expanded.add(cardId);
   else expanded.delete(cardId);
   setExpandedIds([...expanded]);
 }
@@ -112,7 +100,7 @@ function getDishName(dish) {
   return dish.name?.[currentLang] || dish.name?.ru || dish.title || '';
 }
 
-// Создание аккордеона с карточками ТТК
+// Вертикальный список ТТК: карточка раскрывается под названием
 function createTable(data) {
   const tableContainer = document.querySelector('.table-container');
   tableContainer.innerHTML = '';
@@ -127,7 +115,6 @@ function createTable(data) {
 
   const accordion = document.createElement('div');
   accordion.className = 'ttk-accordion';
-  accordion.setAttribute('role', 'list');
   tableContainer.appendChild(accordion);
 
   const recipes = data.recipes.filter(dish => !dish.hidden);
@@ -138,22 +125,16 @@ function createTable(data) {
     const cardId = `dish-${index}`;
     const dishName = getDishName(dish);
 
-    const item = document.createElement('div');
+    const item = document.createElement('details');
     item.className = 'ttk-accordion-item';
     item.dataset.cardId = cardId;
-    item.setAttribute('role', 'listitem');
 
-    const header = document.createElement('button');
-    header.type = 'button';
+    const header = document.createElement('summary');
     header.className = 'ttk-accordion-header';
     header.textContent = dishName;
-    header.setAttribute('aria-expanded', 'false');
-    header.setAttribute('aria-controls', `${cardId}-panel`);
 
     const panel = document.createElement('div');
     panel.className = 'ttk-accordion-panel';
-    panel.id = `${cardId}-panel`;
-    panel.hidden = true;
 
     const table = document.createElement('table');
     table.className = 'pf-table';
@@ -239,13 +220,13 @@ function createTable(data) {
       applyAmountsToTable(table, savedAmounts[cardId]);
     }
 
-    header.addEventListener('click', () => {
-      toggleAccordionItem(item, cardId);
-    });
-
     if (expandedIds.has(cardId)) {
-      toggleAccordionItem(item, cardId, true);
+      item.open = true;
     }
+
+    item.addEventListener('toggle', () => {
+      rememberExpandedState(cardId, item.open);
+    });
   });
 }
 
