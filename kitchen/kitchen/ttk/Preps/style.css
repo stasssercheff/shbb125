@@ -10,6 +10,77 @@ html {
   scroll-behavior: smooth;
 }
 
+.ttk-toc-title {
+  font-weight: 600;
+  font-size: 18px;
+  margin-bottom: 16px;
+  color: #333;
+}
+
+/* Вертикальный выкидной список ТТК */
+.ttk-accordion {
+  display: flex;
+  flex-direction: column;
+  gap: 0;
+  border: 1px solid #ddd;
+  border-radius: 10px;
+  overflow: hidden;
+  background-color: #fff;
+}
+
+.ttk-accordion-item {
+  border-bottom: 1px solid #ddd;
+}
+
+.ttk-accordion-item:last-child {
+  border-bottom: none;
+}
+
+.ttk-accordion-header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 12px;
+  padding: 12px 16px;
+  background-color: #f4f6f8;
+  cursor: pointer;
+  list-style: none;
+  font-weight: 600;
+  font-size: 15px;
+  color: #333;
+  user-select: none;
+  transition: background-color 0.15s ease;
+}
+
+.ttk-accordion-header::-webkit-details-marker {
+  display: none;
+}
+
+.ttk-accordion-header::marker {
+  content: "";
+}
+
+.ttk-accordion-header:hover,
+.ttk-accordion-item[open] > .ttk-accordion-header {
+  background-color: #eee8df;
+}
+
+.ttk-accordion-header::after {
+  content: "▸";
+  flex-shrink: 0;
+  color: #666;
+  transition: transform 0.2s ease;
+}
+
+.ttk-accordion-item[open] > .ttk-accordion-header::after {
+  transform: rotate(90deg);
+}
+
+.ttk-accordion-panel {
+  padding: 0 12px 16px;
+  background-color: #fff;
+}
+
 /* Кнопки разделов */
 .section-buttons {
   display: flex;
@@ -41,44 +112,7 @@ html {
   padding: 5px 10px;
 }
 
-/* Оглавление */
-.ttk-toc {
-  margin-bottom: 32px;
-  padding: 16px 20px;
-  background-color: #fff;
-  border-radius: 10px;
-  box-shadow: 0 2px 6px rgba(0,0,0,0.08);
-}
-
-.ttk-toc-title {
-  font-weight: 600;
-  font-size: 18px;
-  margin-bottom: 12px;
-  color: #333;
-}
-
-.ttk-toc-list {
-  margin: 0;
-  padding-left: 22px;
-  columns: 2;
-  column-gap: 24px;
-}
-
-.ttk-toc-list li {
-  break-inside: avoid;
-  margin-bottom: 6px;
-  color: #666;
-}
-
-.ttk-toc-list a {
-  color: #333;
-  text-decoration: none;
-  border-bottom: 1px solid transparent;
-}
-
-.ttk-toc-list a:hover {
-  border-bottom-color: #c1b29a;
-}
+/* Оглавление — убрано, список теперь аккордеон */
 
 .dish-card {
   margin-bottom: 30px;
@@ -270,8 +304,9 @@ h1[data-i18n="preps"],
 }
 
 @media (max-width: 768px) {
-  .ttk-toc-list {
-    columns: 1;
+  .ttk-accordion-header {
+    font-size: 14px;
+    padding: 10px 12px;
   }
 }
 

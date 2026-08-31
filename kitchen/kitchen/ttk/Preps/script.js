@@ -3,6 +3,16 @@ function getLang() {
   return localStorage.getItem("lang") || "ru";
 }
 
+function t(key, ru, en, vi) {
+  const lang = getLang();
+  if (typeof translations !== "undefined" && translations[key]?.[lang]) {
+    return translations[key][lang];
+  }
+  if (lang === "en") return en;
+  if (lang === "vi") return vi;
+  return ru;
+}
+
 // ================== НАВИГАЦИЯ ==================
 function goHome() {
   location.href = location.origin + "/" + location.pathname.split("/")[1] + "/";
@@ -17,7 +27,67 @@ function goBack() {
 
 // ================== DATA ==================
 const DATA_FILE = "data/preps.json";
+const STORAGE_PREFIX = "kitchen_preps";
+const EXPANDED_KEY = `${STORAGE_PREFIX}_expanded`;
+const AMOUNTS_KEY = `${STORAGE_PREFIX}_amounts`;
+
 let cachedData = null;
+
+function parseJson(raw, fallback) {
+  if (!raw) return fallback;
+  try {
+    return JSON.parse(raw);
+  } catch {
+    return fallback;
+  }
+}
+
+function getExpandedIds() {
+  return parseJson(sessionStorage.getItem(EXPANDED_KEY), []);
+}
+
+function setExpandedIds(ids) {
+  sessionStorage.setItem(EXPANDED_KEY, JSON.stringify(ids));
+}
+
+function getSavedAmountsMap() {
+  const local = parseJson(localStorage.getItem(AMOUNTS_KEY), {});
+  const session = parseJson(sessionStorage.getItem(AMOUNTS_KEY), {});
+  return { ...local, ...session };
+}
+
+function saveAmountsMap(map) {
+  const serialized = JSON.stringify(map);
+  sessionStorage.setItem(AMOUNTS_KEY, serialized);
+  localStorage.setItem(AMOUNTS_KEY, serialized);
+}
+
+function readAmountsFromTable(table) {
+  return [...table.querySelectorAll("tbody tr")].map(row => row.cells[2]?.textContent?.trim() ?? "");
+}
+
+function applyAmountsToTable(table, amounts) {
+  if (!Array.isArray(amounts)) return;
+  const rows = table.querySelectorAll("tbody tr");
+  rows.forEach((row, index) => {
+    const cell = row.cells[2];
+    if (!cell || amounts[index] == null || amounts[index] === "") return;
+    cell.textContent = amounts[index];
+  });
+}
+
+function persistCardAmounts(cardId, table) {
+  const map = getSavedAmountsMap();
+  map[cardId] = readAmountsFromTable(table);
+  saveAmountsMap(map);
+}
+
+function rememberExpandedState(cardId, isOpen) {
+  const expanded = new Set(getExpandedIds());
+  if (isOpen) expanded.add(cardId);
+  else expanded.delete(cardId);
+  setExpandedIds([...expanded]);
+}
 
 // ================== LOAD JSON ==================
 function loadData() {
@@ -43,48 +113,35 @@ function renderPreps(data) {
 
   container.innerHTML = "";
 
-  // Оглавление с якорями на карточки
-  const toc = document.createElement("nav");
-  toc.className = "ttk-toc";
-  toc.setAttribute("aria-label", "TOC");
+  const title = document.createElement("div");
+  title.className = "ttk-toc-title";
+  title.setAttribute("data-i18n", "ttk_all_cards");
+  title.textContent = t("ttk_all_cards", "Все карточки", "All cards", "Tất cả thẻ");
+  container.appendChild(title);
 
-  const tocTitle = document.createElement("div");
-  tocTitle.className = "ttk-toc-title";
-  tocTitle.setAttribute("data-i18n", "ttk_toc");
-  tocTitle.textContent =
-    (typeof translations !== "undefined" && translations.ttk_toc?.[lang]) ||
-    (lang === "en" ? "Contents" : lang === "vi" ? "Mục lục" : "Оглавление");
-  toc.appendChild(tocTitle);
-
-  const tocList = document.createElement("ol");
-  tocList.className = "ttk-toc-list";
-  toc.appendChild(tocList);
-  container.appendChild(toc);
+  const accordion = document.createElement("div");
+  accordion.className = "ttk-accordion";
+  container.appendChild(accordion);
 
   const recipes = (data.recipes || []).filter(dish => dish.enabled !== false);
+  const expandedIds = new Set(getExpandedIds());
+  const savedAmounts = getSavedAmountsMap();
 
   recipes.forEach((dish, index) => {
     const cardId = `dish-${index}`;
     const dishName = dish.name?.[lang] || dish.name?.ru || dish.title || "";
 
-    const tocItem = document.createElement("li");
-    const tocLink = document.createElement("a");
-    tocLink.href = `#${cardId}`;
-    tocLink.textContent = dishName;
-    tocItem.appendChild(tocLink);
-    tocList.appendChild(tocItem);
+    const item = document.createElement("details");
+    item.className = "ttk-accordion-item";
+    item.dataset.cardId = cardId;
 
-    const card = document.createElement("div");
-    card.className = "dish-card";
-    card.id = cardId;
+    const header = document.createElement("summary");
+    header.className = "ttk-accordion-header";
+    header.textContent = dishName;
 
-    // ---- TITLE ----
-    const title = document.createElement("div");
-    title.className = "dish-title";
-    title.textContent = dishName;
-    card.appendChild(title);
+    const panel = document.createElement("div");
+    panel.className = "ttk-accordion-panel";
 
-    // ---- TABLE ----
     const table = document.createElement("table");
     table.className = "pf-table";
 
@@ -106,31 +163,25 @@ function renderPreps(data) {
     });
     thead.appendChild(trh);
 
-    // ---- ROWS ----
     dish.ingredients.forEach((ing, i) => {
       const tr = document.createElement("tr");
 
-      // №
       const tdNum = document.createElement("td");
       tdNum.textContent = ing["№"] ?? i + 1;
 
-      // NAME (RU / EN / VI)
-const tdName = document.createElement("td");
+      const tdName = document.createElement("td");
+      if (lang === "ru") {
+        tdName.textContent = ing["Продукт"] || "";
+      } else if (lang === "vi") {
+        tdName.textContent = ing["Ingredient_vi"] || ing["Ingredient"] || ing["Продукт"] || "";
+      } else {
+        tdName.textContent = ing["Ingredient"] || ing["Продукт"] || "";
+      }
 
-if (lang === "ru") {
-  tdName.textContent = ing["Продукт"] || "";
-} else if (lang === "vi") {
-  tdName.textContent = ing["Ingredient_vi"] || ing["Ingredient"] || ing["Продукт"] || "";
-} else {
-  tdName.textContent = ing["Ingredient"] || ing["Продукт"] || "";
-}
-
-      // AMOUNT
       const tdAmount = document.createElement("td");
       tdAmount.textContent = ing["Шт/гр"];
       tdAmount.dataset.base = ing["Шт/гр"];
 
-      // ==== KEY INGREDIENT (ПЕРЕСЧЁТ) ====
       if (ing["Продукт"] === dish.key) {
         tdAmount.contentEditable = true;
         tdAmount.classList.add("key-ingredient");
@@ -147,6 +198,8 @@ if (lang === "ru") {
               cell.textContent = Math.round(base * factor);
             }
           });
+
+          persistCardAmounts(cardId, table);
         });
 
         tdAmount.addEventListener("keydown", e => {
@@ -160,13 +213,9 @@ if (lang === "ru") {
       tr.appendChild(tdName);
       tr.appendChild(tdAmount);
 
-      // DESCRIPTION
       if (i === 0) {
         const tdDesc = document.createElement("td");
-        tdDesc.textContent =
-          dish.process?.[lang] ||
-          dish.process?.ru ||
-          "";
+        tdDesc.textContent = dish.process?.[lang] || dish.process?.ru || "";
         tdDesc.rowSpan = dish.ingredients.length;
         tr.appendChild(tdDesc);
       }
@@ -175,8 +224,21 @@ if (lang === "ru") {
     });
 
     table.append(thead, tbody);
-    card.appendChild(table);
-    container.appendChild(card);
+    panel.appendChild(table);
+    item.append(header, panel);
+    accordion.appendChild(item);
+
+    if (savedAmounts[cardId]) {
+      applyAmountsToTable(table, savedAmounts[cardId]);
+    }
+
+    if (expandedIds.has(cardId)) {
+      item.open = true;
+    }
+
+    item.addEventListener("toggle", () => {
+      rememberExpandedState(cardId, item.open);
+    });
   });
 }
 
@@ -184,7 +246,6 @@ if (lang === "ru") {
 document.addEventListener("DOMContentLoaded", () => {
   loadData();
 
-  // 🔴 ВАЖНО: перерисовка при смене языка
   document.querySelectorAll(".lang-btn").forEach(btn => {
     btn.addEventListener("click", () => {
       setTimeout(() => {
