@@ -6,16 +6,87 @@ function goHome() {
 
 // На уровень выше (одну папку вверх)
 function goBack() {
-    const currentPath = window.location.pathname;
-    const parentPath = currentPath.substring(0, currentPath.lastIndexOf("/"));
-    const upperPath = parentPath.substring(0, parentPath.lastIndexOf("/"));
-    window.location.href = upperPath + "/index.html";
+  const currentPath = window.location.pathname;
+  const parentPath = currentPath.substring(0, currentPath.lastIndexOf('/'));
+  const upperPath = parentPath.substring(0, parentPath.lastIndexOf('/'));
+  window.location.href = upperPath + '/index.html';
 }
 
-
 const dataFiles = {
-  Preps: 'data/preps.json'
+  Preps: 'data/preps.json',
 };
+
+const STORAGE_PREFIX = 'pastry_ttk';
+const EXPANDED_KEY = `${STORAGE_PREFIX}_expanded`;
+const AMOUNTS_KEY = `${STORAGE_PREFIX}_amounts`;
+
+function parseJson(raw, fallback) {
+  if (!raw) return fallback;
+  try {
+    return JSON.parse(raw);
+  } catch {
+    return fallback;
+  }
+}
+
+function getExpandedIds() {
+  return parseJson(sessionStorage.getItem(EXPANDED_KEY), []);
+}
+
+function setExpandedIds(ids) {
+  sessionStorage.setItem(EXPANDED_KEY, JSON.stringify(ids));
+}
+
+function getSavedAmountsMap() {
+  const local = parseJson(localStorage.getItem(AMOUNTS_KEY), {});
+  const session = parseJson(sessionStorage.getItem(AMOUNTS_KEY), {});
+  return { ...local, ...session };
+}
+
+function saveAmountsMap(map) {
+  const serialized = JSON.stringify(map);
+  sessionStorage.setItem(AMOUNTS_KEY, serialized);
+  localStorage.setItem(AMOUNTS_KEY, serialized);
+}
+
+function readAmountsFromTable(table) {
+  return [...table.querySelectorAll('tbody tr')].map(row => row.cells[2]?.textContent?.trim() ?? '');
+}
+
+function applyAmountsToTable(table, amounts) {
+  if (!Array.isArray(amounts)) return;
+  const rows = table.querySelectorAll('tbody tr');
+  rows.forEach((row, index) => {
+    const cell = row.cells[2];
+    if (!cell || amounts[index] == null || amounts[index] === '') return;
+    cell.textContent = amounts[index];
+  });
+}
+
+function persistCardAmounts(cardId, table) {
+  const map = getSavedAmountsMap();
+  map[cardId] = readAmountsFromTable(table);
+  saveAmountsMap(map);
+}
+
+function toggleAccordionItem(item, cardId, forceOpen) {
+  const panel = item.querySelector('.ttk-accordion-panel');
+  const header = item.querySelector('.ttk-accordion-header');
+  if (!panel || !header) return;
+
+  const shouldOpen = typeof forceOpen === 'boolean'
+    ? forceOpen
+    : !item.classList.contains('is-open');
+
+  item.classList.toggle('is-open', shouldOpen);
+  panel.hidden = !shouldOpen;
+  header.setAttribute('aria-expanded', shouldOpen ? 'true' : 'false');
+
+  const expanded = new Set(getExpandedIds());
+  if (shouldOpen) expanded.add(cardId);
+  else expanded.delete(cardId);
+  setExpandedIds([...expanded]);
+}
 
 // Загрузка JSON
 function loadData(sectionName, callback) {
@@ -41,15 +112,10 @@ function getDishName(dish) {
   return dish.name?.[currentLang] || dish.name?.ru || dish.title || '';
 }
 
-// Создание таблицы
+// Создание аккордеона с карточками ТТК
 function createTable(data) {
   const tableContainer = document.querySelector('.table-container');
   tableContainer.innerHTML = '';
-
-  // Оглавление с якорями на карточки
-  const toc = document.createElement('nav');
-  toc.className = 'ttk-toc';
-  toc.setAttribute('aria-label', 'TOC');
 
   const tocTitle = document.createElement('div');
   tocTitle.className = 'ttk-toc-title';
@@ -57,34 +123,37 @@ function createTable(data) {
   tocTitle.textContent =
     (typeof translations !== 'undefined' && translations.ttk_toc?.[currentLang]) ||
     (currentLang === 'en' ? 'Contents' : currentLang === 'vi' ? 'Mục lục' : 'Оглавление');
-  toc.appendChild(tocTitle);
+  tableContainer.appendChild(tocTitle);
 
-  const tocList = document.createElement('ol');
-  tocList.className = 'ttk-toc-list';
-  toc.appendChild(tocList);
-  tableContainer.appendChild(toc);
+  const accordion = document.createElement('div');
+  accordion.className = 'ttk-accordion';
+  accordion.setAttribute('role', 'list');
+  tableContainer.appendChild(accordion);
 
   const recipes = data.recipes.filter(dish => !dish.hidden);
+  const expandedIds = new Set(getExpandedIds());
+  const savedAmounts = getSavedAmountsMap();
 
   recipes.forEach((dish, index) => {
     const cardId = `dish-${index}`;
     const dishName = getDishName(dish);
 
-    const tocItem = document.createElement('li');
-    const tocLink = document.createElement('a');
-    tocLink.href = `#${cardId}`;
-    tocLink.textContent = dishName;
-    tocItem.appendChild(tocLink);
-    tocList.appendChild(tocItem);
+    const item = document.createElement('div');
+    item.className = 'ttk-accordion-item';
+    item.dataset.cardId = cardId;
+    item.setAttribute('role', 'listitem');
 
-    const card = document.createElement('div');
-    card.className = 'dish-card';
-    card.id = cardId;
+    const header = document.createElement('button');
+    header.type = 'button';
+    header.className = 'ttk-accordion-header';
+    header.textContent = dishName;
+    header.setAttribute('aria-expanded', 'false');
+    header.setAttribute('aria-controls', `${cardId}-panel`);
 
-    const title = document.createElement('div');
-    title.className = 'dish-title';
-    title.textContent = dishName;
-    card.appendChild(title);
+    const panel = document.createElement('div');
+    panel.className = 'ttk-accordion-panel';
+    panel.id = `${cardId}-panel`;
+    panel.hidden = true;
 
     const table = document.createElement('table');
     table.className = 'pf-table';
@@ -130,10 +199,12 @@ function createTable(data) {
           rows.forEach(r => {
             const cell = r.cells[2];
             if (cell && cell !== tdAmount) {
-              let base = parseFloat(cell.dataset.base) || 0;
+              const base = parseFloat(cell.dataset.base) || 0;
               cell.textContent = Math.round(base * factor);
             }
           });
+
+          persistCardAmounts(cardId, table);
         });
 
         tdAmount.addEventListener('keydown', e => {
@@ -149,7 +220,7 @@ function createTable(data) {
 
       const tdDesc = document.createElement('td');
       if (i === 0) {
-        tdDesc.textContent = dish.process?.[currentLang] || "";
+        tdDesc.textContent = dish.process?.[currentLang] || '';
         tdDesc.rowSpan = dish.ingredients.length;
         tr.appendChild(tdDesc);
       }
@@ -159,8 +230,22 @@ function createTable(data) {
 
     table.appendChild(thead);
     table.appendChild(tbody);
-    card.appendChild(table);
-    tableContainer.appendChild(card);
+    panel.appendChild(table);
+    item.appendChild(header);
+    item.appendChild(panel);
+    accordion.appendChild(item);
+
+    if (savedAmounts[cardId]) {
+      applyAmountsToTable(table, savedAmounts[cardId]);
+    }
+
+    header.addEventListener('click', () => {
+      toggleAccordionItem(item, cardId);
+    });
+
+    if (expandedIds.has(cardId)) {
+      toggleAccordionItem(item, cardId, true);
+    }
   });
 }
 
@@ -168,12 +253,11 @@ function createTable(data) {
 document.addEventListener('DOMContentLoaded', () => {
   renderSection('Preps');
 
-  // Подключаемся к глобальному переключению языка
   const originalSwitchLang = window.switchLanguage;
   if (typeof originalSwitchLang === 'function') {
     window.switchLanguage = function (lang) {
-      originalSwitchLang(lang);  // стандартное поведение lang.js
-      updateTablesByLang(lang);  // плюс обновляем таблицы
+      originalSwitchLang(lang);
+      updateTablesByLang(lang);
     };
   }
 });
